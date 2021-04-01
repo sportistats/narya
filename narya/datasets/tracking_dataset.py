@@ -144,7 +144,7 @@ class TrackingDatasetBuilder:
             input_shape,
             batch_size,
             num_workers,
-            ctx,
+            ctx=ctx,
         )
 
         self.train_dataloader = train_loader
