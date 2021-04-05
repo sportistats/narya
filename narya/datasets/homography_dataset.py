@@ -89,7 +89,7 @@ class Dataset:
         self.ids = os.listdir(images_dir)
         self.images_fps = [os.path.join(images_dir, image_id) for image_id in self.ids]
         self.homo_fps = [
-            os.path.join(homo_dir, image_id.replace(".jpg", "_homo.npy"))
+            os.path.join(homo_dir, image_id.replace(".jpg", ".npy"))
             for image_id in self.ids
         ]
 
