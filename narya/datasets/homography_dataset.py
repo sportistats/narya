@@ -87,10 +87,10 @@ class Dataset:
 
     def __init__(self, images_dir, homo_dir, augmentation=None, preprocessing=None):
         self.ids = os.listdir(images_dir)
-        self.images_fps = [os.path.join(images_dir, image_id) for image_id in self.ids]
+        self.images_fps = [os.path.join(images_dir, image_id) for image_id in os.listdir("homography/homography/train_img")]
         self.homo_fps = [
             os.path.join(homo_dir, image_id.replace(".jpg", ".npy"))
-            for image_id in self.ids
+            for image_id in os.listdir("homography/homography/train_img")
         ]
 
         self.augmentation = augmentation
