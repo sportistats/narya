@@ -103,7 +103,7 @@ class Dataset:
 
         # read data
         image = cv2.imread(self.images_fps[i])
-        if image.size is not 0:
+        if image.size is  not None:
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.resize(image, (280, 280))
             homo = np.load(self.homo_fps[i])
