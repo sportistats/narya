@@ -103,7 +103,10 @@ class Dataset:
 
         # read data
         image = cv2.imread(self.images_fps[i])
-        if image != None:
+        print(self.images_fps[i])
+        if image==None:
+            continue
+        else:
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.resize(image, (280, 280))
             homo = np.load(self.homo_fps[i])
@@ -111,24 +114,24 @@ class Dataset:
 
             # apply augmentations
             temp_homo_0 = homo[0][0]
-        if self.augmentation:
-            sample = self.augmentation(image=image, homo=homo)
-            image, homo = sample["image"], sample["homo"]
+            if self.augmentation:
+                sample = self.augmentation(image=image, homo=homo)
+                image, homo = sample["image"], sample["homo"]
 
-        # apply preprocessing
-        if self.preprocessing:
-            sample = self.preprocessing(image=image)
-            image = sample["image"]
+            # apply preprocessing
+            if self.preprocessing:
+                sample = self.preprocessing(image=image)
+                image = sample["image"]
 
-        homo = normalize_homo(homo)
+            homo = normalize_homo(homo)
 
-        if temp_homo_0 != homo[0][0]:
-            homo = get_four_corners(homo)[0]
-            for i in range(4):
-                homo[0][i] = -homo[0][i]
-        else:
-            homo = get_four_corners(homo)[0]
-        return image, homo.flatten()
+            if temp_homo_0 != homo[0][0]:
+                homo = get_four_corners(homo)[0]
+                for i in range(4):
+                    homo[0][i] = -homo[0][i]
+            else:
+                homo = get_four_corners(homo)[0]
+            return image, homo.flatten()
 
 
 def get_training_augmentation():
