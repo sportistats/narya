@@ -9,8 +9,8 @@ import tensorflow as tf
 import keras
 import os
 
-from narya.models.keras_models import DeepHomoModel
-from narya.datasets.homography_dataset import HomographyDatasetBuilder
+from keras_models import DeepHomoModel
+from homography_dataset import HomographyDatasetBuilder
 
 parser = argparse.ArgumentParser(description="Training")
 parser.add_argument("--data_dir", default="dataset/", type=str)
