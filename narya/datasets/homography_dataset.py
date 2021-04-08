@@ -103,13 +103,14 @@ class Dataset:
 
         # read data
         image = cv2.imread(self.images_fps[i])
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image = cv2.resize(image, (280, 280))
-        homo = np.load(self.homo_fps[i])
-        homo = homo[0] if len(homo.shape) > 2 else homo
+        if image.size is not 0:
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image = cv2.resize(image, (280, 280))
+            homo = np.load(self.homo_fps[i])
+            homo = homo[0] if len(homo.shape) > 2 else homo
 
-        # apply augmentations
-        temp_homo_0 = homo[0][0]
+            # apply augmentations
+            temp_homo_0 = homo[0][0]
         if self.augmentation:
             sample = self.augmentation(image=image, homo=homo)
             image, homo = sample["image"], sample["homo"]
