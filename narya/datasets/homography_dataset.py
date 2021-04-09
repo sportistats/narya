@@ -102,8 +102,6 @@ class Dataset:
     def __getitem__(self, i):
 
         # read data
-        if self.images_fps[i]==None:
-            break
         image = cv2.imread(self.images_fps[i])
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = cv2.resize(image, (280, 280))
