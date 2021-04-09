@@ -102,36 +102,34 @@ class Dataset:
     def __getitem__(self, i):
 
         # read data
+        if self.images_fps[i]==None:
+            break
         image = cv2.imread(self.images_fps[i])
-        print(self.images_fps[i])
-        if image==None:
-            continue
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (280, 280))
+        homo = np.load(self.homo_fps[i])
+        homo = homo[0] if len(homo.shape) > 2 else homo
+
+        # apply augmentations
+        temp_homo_0 = homo[0][0]
+        if self.augmentation:
+            sample = self.augmentation(image=image, homo=homo)
+            image, homo = sample["image"], sample["homo"]
+
+        # apply preprocessing
+        if self.preprocessing:
+            sample = self.preprocessing(image=image)
+            image = sample["image"]
+
+        homo = normalize_homo(homo)
+
+        if temp_homo_0 != homo[0][0]:
+            homo = get_four_corners(homo)[0]
+            for i in range(4):
+                homo[0][i] = -homo[0][i]
         else:
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            image = cv2.resize(image, (280, 280))
-            homo = np.load(self.homo_fps[i])
-            homo = homo[0] if len(homo.shape) > 2 else homo
-
-            # apply augmentations
-            temp_homo_0 = homo[0][0]
-            if self.augmentation:
-                sample = self.augmentation(image=image, homo=homo)
-                image, homo = sample["image"], sample["homo"]
-
-            # apply preprocessing
-            if self.preprocessing:
-                sample = self.preprocessing(image=image)
-                image = sample["image"]
-
-            homo = normalize_homo(homo)
-
-            if temp_homo_0 != homo[0][0]:
-                homo = get_four_corners(homo)[0]
-                for i in range(4):
-                    homo[0][i] = -homo[0][i]
-            else:
-                homo = get_four_corners(homo)[0]
-            return image, homo.flatten()
+            homo = get_four_corners(homo)[0]
+        return image, homo.flatten()
 
 
 def get_training_augmentation():
