@@ -166,4 +166,4 @@ class FootballTracker:
                     else:
                         trajectories[id_entity] = [(dst[0], dst[1], frame)]
 
-        return trajectories
+        return trajectories,results
