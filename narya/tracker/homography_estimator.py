@@ -52,20 +52,18 @@ class HomographyEstimator:
 
         if pretrained == True:
 
-            checkpoints_homo = tf.keras.utils.get_file(
-                HOMO_NAME, HOMO_PATH, HOMO_TOTAR,
-            )
-            checkpoints_keypoints = tf.keras.utils.get_file(
-                KEYPOINTS_NAME, KEYPOINTS_PATH, KEYPOINTS_TOTAR,
-            )
+            #checkpoints_homo = tf.keras.utils.get_file(HOMO_NAME, HOMO_PATH, HOMO_TOTAR,)
+            #checkpoints_keypoints = tf.keras.utils.get_file(
+            #    KEYPOINTS_NAME, KEYPOINTS_PATH, KEYPOINTS_TOTAR,)
 
-            self.homo_model.load_weights(checkpoints_homo)
-            self.keypoints_model.load_weights(checkpoints_keypoints)
+            self.homo_model.load_weights('/content/narya/Combined_weights/HomographyModel_0.0001_4.h5')
+            self.keypoints_model.load_weights('/content/narya/Combined_weights/keypoints_model1.h5')
 
         elif weights_homo is not None and weights_keypoints is not None:
 
-            self.homo_model.load_weights(weights_homo)
-            self.keypoints_model.load_weights(weights_keypoints)
+            self.homo_model.load_weights('/content/narya/Combined_weights/HomographyModel_0.0001_4.h5')
+            self.keypoints_model.load_weights('/content/narya/Combined_weights/keypoints_model1.h5')
+
 
         self.shape_in = shape_in
         self.shape_out = shape_out
