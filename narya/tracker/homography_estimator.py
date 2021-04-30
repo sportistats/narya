@@ -50,14 +50,14 @@ class HomographyEstimator:
             backbone="efficientnetb3", num_classes=29, input_shape=keypoint_model_input_shape,
         )
 
-        if pretrained == True:
+        if weights_homo is None and weights_keypoints is None:
 
-            #checkpoints_homo = tf.keras.utils.get_file(HOMO_NAME, HOMO_PATH, HOMO_TOTAR,)
-            #checkpoints_keypoints = tf.keras.utils.get_file(
-            #    KEYPOINTS_NAME, KEYPOINTS_PATH, KEYPOINTS_TOTAR,)
+            checkpoints_homo = tf.keras.utils.get_file(HOMO_NAME, HOMO_PATH, HOMO_TOTAR,)
+            checkpoints_keypoints = tf.keras.utils.get_file(
+                KEYPOINTS_NAME, KEYPOINTS_PATH, KEYPOINTS_TOTAR,)
 
-            self.homo_model.load_weights('/content/narya/Combined_weights/HomographyModel_0.0001_4.h5')
-            self.keypoints_model.load_weights('/content/narya/Combined_weights/keypoints_model1.h5')
+            self.homo_model.load_weights(checkpoints_homo)
+            self.keypoints_model.load_weights(checkpoints_keypoints)
 
         elif weights_homo is not None and weights_keypoints is not None:
 
