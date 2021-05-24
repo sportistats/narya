@@ -61,8 +61,8 @@ class HomographyEstimator:
 
         elif weights_homo is not None and weights_keypoints is not None:
 
-            self.homo_model.load_weights('/content/narya/Combined_weights/HomographyModel_0.0001_4.h5')
-            self.keypoints_model.load_weights('/content/narya/Combined_weights/keypoints_model1.h5')
+            self.homo_model.load_weights(weights_homo)
+            self.keypoints_model.load_weights(weights_keypoints)
 
 
         self.shape_in = shape_in
