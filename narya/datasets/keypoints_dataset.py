@@ -8,7 +8,7 @@ import os
 import cv2
 from tensorflow import keras
 import numpy as np
-import keras.backend as K
+from tensorflow.keras import backend as K
 from lxml import etree
 import six
 import albumentations as A
@@ -171,7 +171,7 @@ class Dataloder(keras.utils.Sequence):
         # transpose list of lists
         batch = [np.stack(samples, axis=0) for samples in zip(*data)]
 
-        return batch
+        return tuple(batch)
 
     def __len__(self):
         """Denotes the number of batches per epoch"""
