@@ -6,6 +6,7 @@ import mxnet as mx
 import random
 import os
 import cv2
+import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 from tensorflow.keras import backend as K
@@ -142,7 +143,7 @@ def get_preprocessing(preprocessing_fn):
     return A.Compose(_transform)
 
 
-class Dataloder(keras.utils.Sequence):
+class Dataloder(tf.keras.utils.Sequence):
     """Load data from dataset and form batches
     
     Arguments:
