@@ -6,9 +6,10 @@ import mxnet as mx
 import random
 import os
 import cv2
+import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import keras.backend as K
+from tensorflow.keras import backend as K
 from lxml import etree
 import six
 import albumentations as A
@@ -142,7 +143,7 @@ def get_preprocessing(preprocessing_fn):
     return A.Compose(_transform)
 
 
-class Dataloder(keras.utils.Sequence):
+class Dataloder(tf.keras.utils.Sequence):
     """Load data from dataset and form batches
     
     Arguments:
@@ -171,7 +172,7 @@ class Dataloder(keras.utils.Sequence):
         # transpose list of lists
         batch = [np.stack(samples, axis=0) for samples in zip(*data)]
 
-        return batch
+        return tuple(batch)
 
     def __len__(self):
         """Denotes the number of batches per epoch"""
